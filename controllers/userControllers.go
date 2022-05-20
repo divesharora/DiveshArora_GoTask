@@ -13,7 +13,7 @@ package controllers
 )
 
 
-
+// reads from json file and adds to db
 func AddUsers(w http.ResponseWriter, r *http.Request) {
 	database.Migrate(&entity.User{})
 	byteValues, err := ioutil.ReadFile("users.json")
@@ -31,6 +31,7 @@ func AddUsers(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode("Users created successfully")
 }
 
+//searches for person name get searchkey from url query
 func GetPersonByName(w http.ResponseWriter, r *http.Request) {
 	database.Migrate(&entity.User{})
 	vars := mux.Vars(r)
@@ -43,6 +44,7 @@ func GetPersonByName(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(user)
 }
 
+//to import likes from json file
 func AddLikes(w http.ResponseWriter, r *http.Request) {
 	database.MigrateLikes(&entity.Likes{})
 	byteValues, err := ioutil.ReadFile("likes.json")
@@ -60,6 +62,8 @@ func AddLikes(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode("Likes created successfully")
 }
 
+
+//to search for users within a particular distance from the main user
 func GetUsersWithinDistance(w http.ResponseWriter, r *http.Request) {
 	database.Migrate(&entity.User{})
 	userid := r.URL.Query().Get("uid")
@@ -78,6 +82,7 @@ func GetUsersWithinDistance(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(matches)
 }
 
+// to find all matches for a user
 func GetMatches(w http.ResponseWriter, r *http.Request) {
 	database.MigrateLikes(&entity.Likes{})
 	userid := r.URL.Query().Get("uid")

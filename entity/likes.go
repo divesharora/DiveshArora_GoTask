@@ -1,6 +1,6 @@
 package entity
 
-
+//Likes struct
 type Likes struct {
 Id        int `json:"id"`
 Who_likes int `json:"who_likes"`
